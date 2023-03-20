@@ -1,18 +1,32 @@
 package com.epam.ilyabuglakov.rest.user;
 
+import com.epam.ilyabuglakov.rest.dto.user.AllUsersResponseDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserRequestDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserResponseDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/api/users")
+@RestController
 public interface UserController {
 
-    UserResponseDto create(UserRequestDto userRequest);
+    @PostMapping
+    UserResponseDto create(@PathVariable(name = "id") long userId, UserRequestDto userRequest);
 
-    UserResponseDto update(UserRequestDto userRequest);
+    @PutMapping("/{id}")
+    UserResponseDto update(@PathVariable(name = "id") long userId, UserRequestDto userRequest);
 
-    ResponseEntity<Object> delete(long id);
+    @DeleteMapping("/{id}")
+    ResponseEntity<Object> delete(@PathVariable(name = "id") long userId);
 
-    UserResponseDto get(long id);
+    @GetMapping("/{id}")
+    UserResponseDto get(@PathVariable(name = "id") long userId);
 
-    UserResponseDto getAll(long id);
+    AllUsersResponseDto getAll();
 }
