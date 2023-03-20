@@ -6,10 +6,13 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class InMemoryUserRepository implements UserRepository {
 
+    private final AtomicLong idGenerator = new AtomicLong();
     private final Map<Long, User> users = new HashMap<>();
 
     @Override
@@ -29,7 +32,11 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
-        return users.put(user.getId(), user);
+        if (user.getId() == null) {
+            user.setId(idGenerator.incrementAndGet());
+        }
+        users.put(user.getId(), user);
+        return user;
     }
 
     @Override

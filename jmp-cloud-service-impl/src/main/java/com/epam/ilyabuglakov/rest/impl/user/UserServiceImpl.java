@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto create(UserRequestDto userRequest) {
         User user = userMapper.mapToUser(userRequest);
+        user.setId(null);
         return userMapper.mapToResponse(userRepository.save(user));
     }
 

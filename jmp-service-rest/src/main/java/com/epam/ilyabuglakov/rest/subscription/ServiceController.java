@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/users/{userId}/subscriptions")
-@RestController
 public interface ServiceController {
 
     @PostMapping
     SubscriptionResponseDto create(@PathVariable(name = "userId") long userId,
-                                   @PathVariable(name = "id") long subscriptionId,
                                    SubscriptionRequestDto subscriptionRequest);
 
     @PutMapping("/{id}")
