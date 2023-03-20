@@ -1,31 +1,18 @@
 package com.epam.ilyabuglakov.rest.user;
 
-import com.epam.ilyabuglakov.rest.dto.user.User;
 import com.epam.ilyabuglakov.rest.dto.user.UserRequestDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserResponseDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 
-@Controller
-public class UserController {
+public interface UserController {
 
-    public UserResponseDto create(UserRequestDto userRequest) {
-        return null;
-    }
+    UserResponseDto create(UserRequestDto userRequest);
 
-    public UserResponseDto update(UserRequestDto userRequest) {
-        return null;
-    }
+    UserResponseDto update(UserRequestDto userRequest);
 
-    public ResponseEntity<Object> delete(long id) {
-        return ResponseEntity.internalServerError().build();
-    }
+    ResponseEntity<Object> delete(long id);
 
-    public UserResponseDto get(long id) {
-        return null;
-    }
+    UserResponseDto get(long id);
 
-    public UserResponseDto getAll(long id) {
-        return null;
-    }
+    UserResponseDto getAll(long id);
 }
