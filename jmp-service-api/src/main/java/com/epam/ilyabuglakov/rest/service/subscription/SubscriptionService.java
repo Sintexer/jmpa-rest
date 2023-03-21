@@ -1,13 +1,16 @@
 package com.epam.ilyabuglakov.rest.service.subscription;
 
-import com.epam.ilyabuglakov.rest.dto.subscription.AllSubscriptionsResponseDto;
+import com.epam.ilyabuglakov.rest.dto.subscription.Subscription;
 import com.epam.ilyabuglakov.rest.dto.subscription.SubscriptionRequestDto;
-import com.epam.ilyabuglakov.rest.dto.subscription.SubscriptionResponseDto;
+
+import java.util.List;
 
 public interface SubscriptionService {
-    SubscriptionResponseDto create(SubscriptionRequestDto userRequest);
-    SubscriptionResponseDto update(SubscriptionRequestDto userRequest);
-    void delete(long id);
-    SubscriptionResponseDto get(long id);
-    AllSubscriptionsResponseDto getAll();
+    Subscription create(SubscriptionRequestDto subscriptionRequest);
+
+    void delete(SubscriptionRequestDto subscriptionRequestDto);
+
+    Subscription get(SubscriptionRequestDto subscriptionRequestDto);
+
+    List<Subscription> getAll();
 }

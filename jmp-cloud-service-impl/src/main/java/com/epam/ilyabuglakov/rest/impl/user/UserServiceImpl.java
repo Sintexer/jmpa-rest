@@ -1,12 +1,12 @@
 package com.epam.ilyabuglakov.rest.impl.user;
 
-import com.epam.ilyabuglakov.rest.dto.user.AllUsersResponseDto;
 import com.epam.ilyabuglakov.rest.dto.user.User;
 import com.epam.ilyabuglakov.rest.dto.user.UserRequestDto;
-import com.epam.ilyabuglakov.rest.dto.user.UserResponseDto;
 import com.epam.ilyabuglakov.rest.impl.user.exceptions.UserNotFoundByIdException;
 import com.epam.ilyabuglakov.rest.service.user.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,17 +20,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto create(UserRequestDto userRequest) {
+    public User create(UserRequestDto userRequest) {
         User user = userMapper.mapToUser(userRequest);
         user.setId(null);
-        return userMapper.mapToResponse(userRepository.save(user));
+        return userRepository.save(user);
     }
 
     @Override
-    public UserResponseDto update(UserRequestDto userRequest) {
+    public User update(UserRequestDto userRequest) {
         verifyUserExists(userRequest.getId());
         User user = userMapper.mapToUser(userRequest);
-        return userMapper.mapToResponse(userRepository.save(user));
+        return userRepository.save(user);
     }
 
     @Override
@@ -40,14 +40,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto get(long id) {
+    public User get(long id) {
         verifyUserExists(id);
-        return userMapper.mapToResponse(userRepository.findById(id));
+        return userRepository.findById(id);
     }
 
     @Override
-    public AllUsersResponseDto getAll() {
-        return new AllUsersResponseDto(userMapper.mapAllToResponse(userRepository.findAll()));
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     private void verifyUserExists(long id) {

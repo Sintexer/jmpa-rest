@@ -4,7 +4,6 @@ import com.epam.ilyabuglakov.rest.dto.user.AllUsersResponseDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserRequestDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserResponseDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 public interface UserController {

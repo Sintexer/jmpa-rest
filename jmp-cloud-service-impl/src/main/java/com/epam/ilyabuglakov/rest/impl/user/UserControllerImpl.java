@@ -3,7 +3,6 @@ package com.epam.ilyabuglakov.rest.impl.user;
 import com.epam.ilyabuglakov.rest.dto.user.AllUsersResponseDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserRequestDto;
 import com.epam.ilyabuglakov.rest.dto.user.UserResponseDto;
-import com.epam.ilyabuglakov.rest.impl.user.exceptions.UserNotFoundByIdException;
 import com.epam.ilyabuglakov.rest.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +23,22 @@ import java.time.format.DateTimeParseException;
 public class UserControllerImpl {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
-    public UserControllerImpl(UserService userService) {
+    public UserControllerImpl(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping
     public UserResponseDto create(@RequestBody UserRequestDto userRequest) {
-        return userService.create(userRequest);
+        return userMapper.mapToResponse(userService.create(userRequest));
     }
 
     @PutMapping("/{id}")
     public UserResponseDto update(@PathVariable(name = "id") long userId, @RequestBody UserRequestDto userRequest) {
         userRequest.setId(userId);
-        return userService.update(userRequest);
+        return userMapper.mapToResponse(userService.update(userRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -48,17 +49,12 @@ public class UserControllerImpl {
 
     @GetMapping("/{id}")
     public UserResponseDto get(@PathVariable(name = "id") long userId) {
-        return userService.get(userId);
+        return userMapper.mapToResponse(userService.get(userId));
     }
 
     @GetMapping
     public AllUsersResponseDto getAll() {
-        return userService.getAll();
-    }
-
-    @ExceptionHandler(UserNotFoundByIdException.class)
-    public ResponseEntity<Object> handleUserNotFound(UserNotFoundByIdException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id=" + e.getId() + " was not found");
+        return new AllUsersResponseDto(userMapper.mapAllToResponse(userService.getAll()));
     }
 
     @ExceptionHandler(DateTimeParseException.class)
